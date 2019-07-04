@@ -1,0 +1,31 @@
+{% load static %}
+ <!-- Modal -->
+ <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title" id="myModalLabel">Simple search engine tool</h4>
+        </div>
+        <div class="modal-body">
+          The goal is to index an infinite list of URLs (web pages), and then be able to quickly search relevant URLs against a query.
+          <br/><br/>
+          <b>Indexing</b><br/>
+          The indexing operation of a new URL first crawls URL, then extracts the title and main text content from the page.
+          Then, a new document representing the URL's data is saved in ElasticSearch, and goes for indexing.
+          <br/><br/>
+          <b>Searching</b><br/>
+          When searching for relevant URLs, the engine will compare the query with the data of each document (web page), and retrieve a list of URLs matching the query, sorted by relevance.
+          <br/><br/>
+          <b>Note</b>
+          <br/>This API works for a finite list of languages, see <a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/analysis-lang-analyzer.html" target="_blank">here</a> for the complete list.
+          <br/><br/>
+          <b>Demo</b><br/>
+          About 500 French URLs and 500 English URLs of the news network <a href="http://www.france24.com/" target="_blank">France24</a> have been indexed.
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
