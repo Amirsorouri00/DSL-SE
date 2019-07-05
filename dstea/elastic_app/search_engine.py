@@ -9,9 +9,13 @@ import elastic_app.query as query
 from django.http import HttpResponse
 from django.http import JsonResponse
 
-hosts = "localhost"
-http_auth = ("elastic", "changeme")
-port = "9200"
+# hosts = "localhost"
+# http_auth = ("elastic", "changeme")
+# port = "9200"
+
+hosts = [os.getenv("HOST")]
+http_auth = (os.getenv("USERNAME"), os.getenv("PASSWORD"))
+port = os.getenv("PORT")
 client = connections.create_connection(hosts=hosts, http_auth=http_auth, port=port)
 
 def search(inputs):

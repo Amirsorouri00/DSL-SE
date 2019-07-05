@@ -19,10 +19,19 @@ from scrapy.crawler import CrawlerProcess
 from elasticsearch_dsl import Index, Search, Mapping
 from elasticsearch_dsl.connections import connections
 
-hosts = "localhost"
-http_auth = ("elastic", "changeme")
-port = "9200"
+# initiate the elasticsearch connection
+
+hosts = [os.getenv("HOST")]
+http_auth = (os.getenv("USERNAME"), os.getenv("PASSWORD"))
+port = os.getenv("PORT")
+# hosts = "localhost"
+# http_auth = ("elastic", "changeme")
+# port = "9200"
 client = connections.create_connection(hosts=hosts, http_auth=http_auth, port=port)
+
+# initiate Redis connection
+
+# redis_conn = Redis(os.getenv("REDIS_HOST", "redis"), os.getenv("REDIS_PORT", 6379))
 redis_conn = Redis("127.0.0.1", os.getenv("REDIS_PORT", 6379))
 
 

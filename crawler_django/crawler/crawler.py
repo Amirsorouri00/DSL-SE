@@ -20,9 +20,12 @@ from rq.decorators import job
 from rq import Queue
 from elasticsearch_dsl.connections import connections
 
-hosts = "localhost"
-http_auth = ("elastic", "changeme")
-port = "9200"
+# hosts = "localhost"
+# http_auth = ("elastic", "changeme")
+# port = "9200"
+hosts = [os.getenv("HOST")]
+http_auth = (os.getenv("USERNAME"), os.getenv("PASSWORD"))
+port = os.getenv("PORT")
 client = connections.create_connection(hosts=hosts, http_auth=http_auth, port=port)
 
 class Crawler(scrapy.spiders.CrawlSpider):
