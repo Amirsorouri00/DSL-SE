@@ -1,3 +1,9 @@
+__author__ = ["Amir Hossein Sorouri", "Anthony Sigogne"]
+__copyright__ = "Copyright 2019, DSL-SE"
+__email__ = ["amirsorouri26@gmail.com", "anthony@byprog.com"]
+__license__ = "Apache-2.0"
+__version__ = "2.0"
+
 from django.shortcuts import render
 from django.http import HttpResponse
 import json
@@ -6,16 +12,12 @@ import json
 def ui_one(request, format=None):
     context = {"here": "here"}
     return render(request, 'client_side/layout.html', context)
-    # return JsonResponse({'received data': request.POST}, safe=False, status=200)
 
 def ui_two(request, format=None):
     context = {"here": "here"}
     return render(request, 'client_side/layout-empty.html', context)
 
 
-# import requests
-# host = "127.0.0.1"
-# port = "5000"
 def search(request, format=None):
     """
     URL : /
@@ -37,25 +39,19 @@ def search(request, format=None):
     if query :
         # query search engine
         try :
-            # r = requests.post('http://%s:%s/search'%(host, port), data = {
-            #     'query':query,
-            #     'hits':hits,
-            #     'start':start,
-            #     'highlight':1
-            # })
             data = {
                 'query':query,
                 'hits':hits,
                 'start':start,
                 'highlight':1
             }
-            print('here')
             from elastic_app.search_engine import search
             import time
             start = time.time()
             r = search(data)
             end = time.time()
         except Exception as e:
+            print(e)
             return HttpResponse('%s (%s)' % (e, type(e)))
 
         # get data and compute range of results pages
@@ -75,5 +71,4 @@ def search(request, format=None):
             "results": data["results"]    
         })
 
-    # return homepage (no query)
     return render(request, 'client_side/layout-empty.html')

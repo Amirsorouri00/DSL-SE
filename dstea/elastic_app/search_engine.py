@@ -1,14 +1,22 @@
+__author__ = ["Amir Hossein Sorouri", "Anthony Sigogne"]
+__copyright__ = "Copyright 2019, DSL-SE"
+__email__ = ["amirsorouri26@gmail.com", "anthony@byprog.com"]
+__license__ = "Apache-2.0"
+__version__ = "2.0"
+
+import os
+import json
+from . import re
+from . import query
+from django.http import JsonResponse
+from django.http import HttpResponse
+from elasticsearch.helpers import bulk
+import elastic_app.analyzer as analyzer
+from elasticsearch import Elasticsearch
 from elasticsearch_dsl.connections import connections
 from elasticsearch_dsl import DocType, Text, Date, Search
-from elasticsearch.helpers import bulk
-from elasticsearch import Elasticsearch
-import json
-import elastic_app.analyzer as analyzer
-import elastic_app.re as re
-import elastic_app.query as query
-from django.http import HttpResponse
-from django.http import JsonResponse
 
+# Create a connection to ElasticSearch
 # hosts = "localhost"
 # http_auth = ("elastic", "changeme")
 # port = "9200"
@@ -65,21 +73,21 @@ def search(inputs):
 
     # analyze user query
     groups = re.search("(site:(?P<domain>[^ ]+))?( ?(?P<query>.*))?",data["query"]).groupdict()
+    
     if groups.get("query", False) and groups.get("domain", False) :
         # expression in domain query
-        response = client.search(index="web-*", doc_type="page", body=query.domain_expression_query(groups["domain"], groups["query"]), from_=start, size=hits)
+        response = client.search(index="page*", body=query.domain_expression_query(groups["domain"], groups["query"]), from_=start, size=hits)
         results = [format_result(hit["_source"], hit.get("highlight", None)) for hit in response["hits"]["hits"]]
         total = response["hits"]["total"]
 
     elif groups.get("domain", False) :
         # domain query
-        response = client.search(index="web-*", doc_type="page", body=query.domain_query(groups["domain"]), from_=start, size=hits)
+        response = client.search(index="page*", body=query.domain_query(groups["domain"]), from_=start, size=hits)
         results = [format_result(hit["_source"], None) for hit in response["hits"]["hits"]]
         total = response["hits"]["total"]
 
     elif groups.get("query", False) :
-        # expression query
-        response = client.search(index="web-*", doc_type="page", body=query.expression_query(groups["query"]))
+        response = client.search(index="page*", body=query.expression_query(groups["query"]))
         results = []
         for domain_bucket in response['aggregations']['per_domain']['buckets']:
             for hit in domain_bucket["top_results"]["hits"]["hits"] :
@@ -87,5 +95,4 @@ def search(inputs):
         results = [result[0] for result in sorted(results, key=lambda result: result[1], reverse=True)]
         total = len(results)
         results = results[start:start+hits]
-
     return json.dumps(dict(total=total, results=results))

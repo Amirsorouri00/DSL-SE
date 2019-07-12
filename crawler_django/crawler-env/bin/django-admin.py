@@ -1,4 +1,4 @@
-#!/home/amirsorouri00/Desktop/search-engine/myproject/dockerize-search-engine-components/crawler_django/crawler-env/bin/python3.7
+#!/home/amirsorouri00/Desktop/opt/search-engine/distributed-django-SE/crawler_django/crawler-env/bin/python3.7
 from django.core import management
 
 if __name__ == "__main__":

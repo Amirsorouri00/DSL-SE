@@ -2,8 +2,8 @@ certifi==2019.3.9
 chardet==3.0.4
 Click==7.0
 Django==2.2.2
-elasticsearch==5.5.3
-elasticsearch-dsl==5.4.0
+elasticsearch<8.0.0,>=7.0.0
+elasticsearch-dsl>=7.0.0,<8.0.0
 get==2019.4.13
 html2text==2018.1.9
 idna==2.8

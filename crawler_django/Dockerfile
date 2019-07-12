@@ -8,10 +8,14 @@ RUN apk add --no-cache libmemcached-dev zlib-dev
 
 RUN apk add --no-cache gcc g++ make linux-headers libxml2 libxslt-dev libffi-dev openssl-dev
 
-WORKDIR ./
+RUN mkdir /crawler
 
-COPY requirements.txt ./
+WORKDIR /crawler
+
+COPY requirements.txt /crawler/
+
 RUN pip install --no-cache-dir -r requirements.txt
-COPY . .
 
-CMD [ "python", "manage.py", "runserver" ]
+COPY . /crawler/
+
+# CMD [ "python", "manage.py", "runserver" ]

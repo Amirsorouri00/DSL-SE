@@ -1,0 +1,91 @@
+version: '1'
+services:
+  redis:
+    image: "redis"
+    container_name: redis
+    volumes:
+      - ./data/redis:/data
+    ports:
+      - 6379:6379
+  rq-dashboard:
+    image: "anthonysigogne/rq-dashboard"
+    container_name: rq-dashboard
+    restart: on-failure
+    ports:
+      - 9181:9181
+    environment:
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+  elasticsearch:
+    image: "docker.elastic.co/elasticsearch/elasticsearch:5.5.0"
+    container_name: elasticsearch
+    volumes:
+      - esdata1:/data/elastic
+    ports:
+      - 9200:9200
+      - 9300:9300
+    environment:
+      # - discovery.type=single-node
+      - http.port=9200
+      - http.cors.enabled=true
+      # - xpack.security.authc.accept_default_password = true
+      - http.cors.allow-origin=http://localhost:1358,http://127.0.0.1:1358
+      - http.cors.allow-headers=X-Requested-With,X-Auth-Token,Content-Type,Content-Length,Authorization
+      - http.cors.allow-credentials=true
+      # - bootstrap.memory_lock=true
+      # - 'ES_JAVA_OPTS=-Xms750m -Xmx750m'
+    ulimits:
+      nproc: 3000
+      nofile: 524288
+      memlock:
+        soft: -1
+        hard: -1
+    mem_limit: 4000m
+  dejavu:
+    image: appbaseio/dejavu:3.2.3
+    container_name: dejavu
+    ports:
+        - '1358:1358'
+    links:
+        - elasticsearch
+
+  # search-engine-job:
+  #   image: "anthonysigogne/web-search-engine"
+  #   container_name: web-search-engine
+  #   ports:
+  #     - "5000:5000"
+  #   restart: on-failure
+  #   environment:
+  #     - HOST=elasticsearch
+  #     - PORT=9200
+  #     - USERNAME=elastic
+  #     - PASSWORD=changeme
+  #     - FLASK_APP=index.py
+  #     - REDIS_HOST=redis
+  #     - REDIS_PORT=6379
+  search-engine-ui:
+    image: "anthonysigogne/web-search-engine-ui"
+    container_name: web-search-engine-ui
+    ports:
+      - "80:5000"
+    restart: on-failure
+    environment:
+      - HOST=web-search-engine
+      - PORT=5000
+      - FLASK_APP=index.py
+  rq:
+    image: "rq"
+    container_name: rq
+    restart: on-failure
+    environment:
+      - HOST=elasticsearch
+      - PORT=9200
+      - USERNAME=elastic
+      - PASSWORD=changeme
+      - FLASK_APP=index.py
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+
+volumes:
+  esdata1:
+    driver: local

@@ -29,7 +29,7 @@ end
 # unset irrelevant variables
 deactivate nondestructive
 
-set -gx VIRTUAL_ENV "/home/amirsorouri00/Desktop/search-engine/myproject/dockerize-search-engine-components/crawler_django/crawler-env"
+set -gx VIRTUAL_ENV "/home/amirsorouri00/Desktop/opt/search-engine/distributed-django-SE/crawler_django/crawler-env"
 
 set -gx _OLD_VIRTUAL_PATH $PATH
 set -gx PATH "$VIRTUAL_ENV/bin" $PATH

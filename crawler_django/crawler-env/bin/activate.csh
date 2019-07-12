@@ -8,7 +8,7 @@ alias deactivate 'test $?_OLD_VIRTUAL_PATH != 0 && setenv PATH "$_OLD_VIRTUAL_PA
 # Unset irrelevant variables.
 deactivate nondestructive
 
-setenv VIRTUAL_ENV "/home/amirsorouri00/Desktop/search-engine/myproject/dockerize-search-engine-components/crawler_django/crawler-env"
+setenv VIRTUAL_ENV "/home/amirsorouri00/Desktop/opt/search-engine/distributed-django-SE/crawler_django/crawler-env"
 
 set _OLD_VIRTUAL_PATH="$PATH"
 setenv PATH "$VIRTUAL_ENV/bin:$PATH"

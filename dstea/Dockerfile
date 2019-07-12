@@ -1,12 +1,23 @@
-FROM python:3.5-alpine
+FROM alpine
 
 RUN apk add --no-cache gcc g++ make linux-headers libxml2 libxslt-dev libffi-dev openssl-dev
 
+FROM python:3.7
 
-WORKDIR ./
+RUN pip install --upgrade pip
 
-COPY requirements.txt ./
+RUN mkdir /dstea
+
+WORKDIR /dstea
+
+COPY requirements.txt /dstea/
+
+RUN python -m venv dstea_env
+
+# RUN source ./dstea_env/bin/activate
+
 RUN pip install --no-cache-dir -r requirements.txt
-COPY . .
 
-CMD [ "python", "manage.py", "runserver" ]
+COPY . /dstea/
+
+#CMD [ "python", "manage.py", "runserver" ]

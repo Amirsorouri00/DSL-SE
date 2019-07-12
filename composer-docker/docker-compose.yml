@@ -1,0 +1,78 @@
+version: "2"
+services:
+  redis:
+    image: "redis"
+    container_name: dsse_redis
+    volumes:
+      - ./data/redis:/data
+    ports:
+      - 6379:6379
+  elasticsearch:
+    image: "docker.elastic.co/elasticsearch/elasticsearch:7.2.0"
+    container_name: dsse_elasticsearch
+    volumes:
+      - esdata1:/data/elastic
+    ports:
+      - 9200:9200
+      - 9300:9300
+    environment:
+      - http.port=9200
+      - http.cors.enabled=true
+      - http.cors.allow-origin=http://localhost:1358,http://127.0.0.1:1358
+      - http.cors.allow-headers=X-Requested-With,X-Auth-Token,Content-Type,Content-Length,Authorization
+      - http.cors.allow-credentials=true
+      - node.name=dsse_elasticsearch
+      - discovery.seed_hosts=dsse_elasticsearch
+      - cluster.initial_master_nodes=dsse_elasticsearch
+      - cluster.name=docker-cluster
+      - bootstrap.memory_lock=true
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+    ulimits:
+      nproc: 8192
+      nofile: 524288
+      memlock:
+        soft: -1
+        hard: -1
+    mem_limit: 4000m
+
+  client:
+    image: amirsorouri26/dsse_dstea_django:V2.02
+    container_name: dsse_dstea_django
+    command: python manage.py runserver 0.0.0.0:8000
+    ports:
+      - 8000:8000
+    environment:
+      - HOST=elasticsearch
+      - PORT=9200
+      - USERNAME=elastic
+      - PASSWORD=changeme
+    depends_on:
+      - elasticsearch
+  crawler:
+    image: amirsorouri26/dsse_crawler_django:V2.01
+    container_name: dsse_crawler_django
+    command: python manage.py runserver 0.0.0.0:8000 --nothreading --noreload
+    ports:
+      - 8080:8000
+    environment:
+      - HOST=elasticsearch
+      - PORT=9200
+      - USERNAME=elastic
+      - PASSWORD=changeme
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+    depends_on:
+      - elasticsearch
+  dejavu:
+    image: appbaseio/dejavu:3.3.0
+    container_name: dsse_dejavu
+    ports:
+      - '1358:1358'
+    links:
+      - elasticsearch
+    depends_on:
+      - elasticsearch
+
+volumes:
+  esdata1:
+    driver: local

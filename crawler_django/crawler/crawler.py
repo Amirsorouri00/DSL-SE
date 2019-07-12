@@ -1,32 +1,38 @@
 __author__ = ["Amir Hossein Sorouri", "Anthony Sigogne"]
-__copyright__ = "Copyright 2019, DSTea"
+__copyright__ = "Copyright 2019, DSL-SE"
 __email__ = ["amirsorouri26@gmail.com", "anthony@byprog.com"]
-__license__ = "GNU"
-__version__ = "1.0"
+__license__ = "Apache-2.0"
+__version__ = "2.0"
 
+import datetime
 import requests
+from .elastic_index_class import Web, WebPage
 import os
-import url
+from . import url
 import scrapy
 import base64
 import io
 from scrapy.spiders import CrawlSpider, Rule
 from scrapy.linkextractors import LinkExtractor
 from scrapy.http import Request
-from language import languages
+from elasticsearch_dsl import Document, DateRange, Keyword, Range, Text, Object
+from .language import languages
 from collections import Counter
 from PIL import Image
 from rq.decorators import job
 from rq import Queue
 from elasticsearch_dsl.connections import connections
 
+# Create a connection to ElasticSearch
 # hosts = "localhost"
 # http_auth = ("elastic", "changeme")
 # port = "9200"
+
 hosts = [os.getenv("HOST")]
 http_auth = (os.getenv("USERNAME"), os.getenv("PASSWORD"))
 port = os.getenv("PORT")
 client = connections.create_connection(hosts=hosts, http_auth=http_auth, port=port)
+
 
 class Crawler(scrapy.spiders.CrawlSpider):
     """
@@ -38,6 +44,8 @@ class Crawler(scrapy.spiders.CrawlSpider):
         # Extract all inner domain links with state "follow"
         Rule(LinkExtractor(), callback='parse_items', follow=True, process_links='links_processor'),
     )
+    
+    web = None    
     es_client=None  # elastic client
     redis_conn=None # redis client
 
@@ -94,26 +102,12 @@ def pipeline(response, spider):
     if body.count(" ") < boilerplate.count(" ") or not url.create_description(body) :
         # probably bad content quality
         weight -= 1
+        
+    # WebPage.init()
+    first = WebPage(url=response.url, title=title, domain=domain\
+                    , description=description, body=body, web=spider.web, weight=weight)
+    first.save()
 
-    # -- TEST -- #
-    """keywords = Counter()
-    text_for_keywords = "%s\n%s\n%s"%(title, description, bestbody)
-    r = requests.post('http://localhost:5001/keywords_from_text', data = {'text':text_for_keywords})
-    data = r.json()
-    #print(hit.url, data)
-    for k in data["keywords"] :
-        keywords[k] += 1
-    keywords = " ".join(["%s "%(kw)*score for kw, score in keywords.most_common(100)])"""
-
-    # index url and data
-    res = spider.es_client.index(index="web-%s"%lang, doc_type='page', id=response.url, body={
-        "url":response.url,
-        "domain":domain,
-        "title":title,
-        "description":description,
-        "body":body,
-        "weight":weight
-    })
 
     # try to create thumbnail from page
     img_link = response.css("meta[property='og:image']::attr(content)").extract_first()

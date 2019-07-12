@@ -3,8 +3,8 @@
 <html>
 
 <head>
-    <title>Search engine tool - Byprog</title>
-
+    <title>Search engine tool - DSL-SE</title>
+    <link rel="shortcut icon" href="{% static 'images/new-google-favicon-512.ico' %}" alt="dsl-se" type="image/x-icon"/>
     <meta name="description" content="A simple web search engine."/>
 
     <style>
@@ -32,7 +32,7 @@
         }
 
         #logo span {
-            background: url(/images/nav_logo242.png) no-repeat;
+            background: url("{% static 'images/new-google-favicon-512.png' %}") no-repeat;
             cursor: pointer;
             overflow: hidden
         }
@@ -3139,7 +3139,7 @@
     <script   src="https://code.jquery.com/jquery-3.2.1.slim.min.js"   integrity="sha256-k2WSCIexGzOj3Euiig+TlR8gA0EmPjuc79OEeY5L45g="   crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 </head>
-<body class="hp vasq" onload="try{if(!google.j.b){document.f&amp;&amp;document.f.q.focus();document.gbqf&amp;&amp;document.gbqf.q.focus();}}catch(e){}if(document.images)new Image().src='/images/nav_logo242.png'" id="gsr">
+<body class="hp vasq" onload="try{if(!google.j.b){document.f&amp;&amp;document.f.q.focus();document.gbqf&amp;&amp;document.gbqf.q.focus();}}catch(e){}if(document.images)new Image().src='/images/nav_logo242.png' " id="gsr">
     <div class="ctr-p" id="viewport">
         <div data-jiis="cc" id="doc-info"></div>
         <div data-jiis="cc" id="cst">
@@ -3154,7 +3154,7 @@
             </div>
 
             <form class="tsf" action="/cls/form/" style="overflow:visible" id="tsf" method="GET" name="f" onsubmit="return q.value!=''" role="search">
-                <center><img src="{% static 'images/googlelogo.png' %}" alt="Byprog"></center>
+                <center><img src="{% static 'images/googlelogo.png' %}" alt="dsl-se"></center>
                   <div class="tsf-p">
                     <div class="sfibbbc">
                         <div class="sbtc" id="sbtc">
@@ -3413,7 +3413,7 @@
                 <div id="footcnt">
                     <div class="_dQc _E2" id="fbar">
                         <div class="fbar"> <span id="fsr">
-                            </span> <span id="fsl"> <a class="_Gs" href="https://www.byprog.com/en" target="_blank">Byprog</a> <a class="_Gs" href="https://github.com/AnthonySigogne/web-search-engine" target="_blank">About this tool</a> <a class="_Gs" href="#" data-toggle="modal" data-target="#myModal">Help</a></span> </div>
+                            </span> <span id="fsl"> <a class="_Gs" href="https://amirsorouri00.github.io/" target="_blank">About the author</a> <a class="_Gs" href="https://github.com/Amirsorouri00/DSL-SE" target="_blank">About this tool</a> <a class="_Gs" href="#" data-toggle="modal" data-target="#myModal">Help</a></span> </div>
                     </div>
                 </div>
             </div>
@@ -3440,7 +3440,7 @@
                 <br/>This API works for a finite list of languages, see <a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/analysis-lang-analyzer.html" target="_blank">here</a> for the complete list.
                 <br/><br/>
                 <b>Demo</b><br/>
-                About 500 French URLs and 500 English URLs of the news network <a href="http://www.france24.com/" target="_blank">France24</a> have been indexed.
+                Not Yet...
               </div>
               <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>

@@ -1,3 +1,9 @@
+__author__ = ["Amir Hossein Sorouri", "Anthony Sigogne"]
+__copyright__ = "Copyright 2019, DSL-SE"
+__email__ = ["amirsorouri26@gmail.com", "anthony@byprog.com"]
+__license__ = "Apache-2.0"
+__version__ = "2.0"
+
 from django.urls import include, path
 from .views import ui_one, ui_two, search
 
@@ -12,8 +18,6 @@ urlpatterns = [
     ], 'client_side'), namespace='form')),
 
     path('rest/', include(([
-
-        # path('', SingleEvent.as_view(), name='single_event_view'),
         
     ], 'client_side'), namespace='rest')),
 ]
