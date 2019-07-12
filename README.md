@@ -1,7 +1,6 @@
 # Distributed System Lab - Search Engine
 
-
-Foobar is a Python library for dealing with word pluralization.
+This Part and all other foo bar part of this document will be completed ASAP. Foobar is a Python library for dealing with word pluralization. feel free to contibute and ask.
 
 ## Installation
 
@@ -44,8 +43,11 @@ Please make sure to update tests as appropriate.
 ## License
 [Apache License 2.0](https://choosealicense.com/licenses/apache-2.0/)
 
-curl -d "url=http://www.laravel.com" -X POST http://localhost:8080/crawler/crawl/
+## Commands
 
+```bash
+curl -d "url=http://www.laravel.com" -X POST http://localhost:8080/crawler/crawl/
+```
 
 ## Usefull Links
 * https://blog.sneawo.com/blog/2017/09/07/how-to-install-pillow-psycopg-pylibmc-packages-in-pythonalpine-image/
