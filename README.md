@@ -5,10 +5,25 @@ Foobar is a Python library for dealing with word pluralization.
 
 ## Installation
 
+### Django Crawler & DSTea
 Use the package manager [pip](https://pip.pypa.io/en/stable/) to install foobar.
 
 ```bash
-pip install foobar
+$ cd [crawler_django, dstea]
+$ python -m venv py_environment
+$ source py_environment/bin/activate
+$ pip install -r requirements.txt
+$ python manage.py runserver
+$ Done!!
+
+```
+
+
+### Docker-Compose
+```bash
+$ cd composer-docker
+$ sudo docker-compose up
+
 ```
 
 ## Usage
