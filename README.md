@@ -1,4 +1,4 @@
-# Distributed System Lab - Search Engine
+# Distributed System - Search Engine
 
 This Part and all other foo bar part of this document will be completed ASAP. Foobar is a Python library for dealing with word pluralization. feel free to contibute and ask.
 
