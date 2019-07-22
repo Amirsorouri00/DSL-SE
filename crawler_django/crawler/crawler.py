@@ -104,7 +104,7 @@ def pipeline(response, spider):
         weight -= 1
         
     # WebPage.init()
-    first = WebPage(url=response.url, title=title, domain=domain\
+    first = WebPage(url=response.url, title=title, domain=domain \
                     , description=description, body=body, web=spider.web, weight=weight)
     first.save()
 
