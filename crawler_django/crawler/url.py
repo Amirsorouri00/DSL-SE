@@ -9,6 +9,7 @@ __license__ = "MIT"
 __version__ = "1.0"
 
 import re
+import string
 import langdetect
 import html2text
 import requests
@@ -93,3 +94,19 @@ def create_description(body) :
     if not candidates :
         return None
     return candidates[0]
+
+
+def extract_words(test_string):
+    res = re.sub('['+string.punctuation+']', '', test_string).split()
+    return res
+
+def count_word_occurences(test_string, word):
+    count = test_string.count(word)
+    return count
+
+def create_inverted_index(test_string):
+    words = extract_words(test_string)
+    dict = {}
+    for word in words:
+        dict[word] = count_word_occurences(test_string, word)
+    return dict

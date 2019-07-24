@@ -5,7 +5,7 @@ __license__ = "Apache-2.0"
 __version__ = "2.0"
 
 from django.urls import include, path
-from .views import ui_one, ui_two, search
+from .views import ui_one, ui_two, search, another_search
 
 app_name = 'client_side'
 
@@ -13,7 +13,8 @@ urlpatterns = [
     path('form/', include(([
         path('1', ui_one, name='template_test_one'),
         path('2', ui_two, name='template_test_two'),
-        path('', search, name='page'),
+        # path('', search, name='page'),
+        path('', another_search, name='page'),
         
     ], 'client_side'), namespace='form')),
 

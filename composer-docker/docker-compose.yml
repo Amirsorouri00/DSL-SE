@@ -3,6 +3,8 @@ services:
   redis:
     image: "redis"
     container_name: dsse_redis
+    environment:
+      - vm.overcommit_memory=1
     volumes:
       - ./data/redis:/data
     ports:
@@ -36,7 +38,7 @@ services:
     mem_limit: 4000m
 
   client:
-    image: amirsorouri26/dsse_dstea_django:V2.02
+    image: amirsorouri26/dsse_dstea_django:V2.04
     container_name: dsse_dstea_django
     command: python manage.py runserver 0.0.0.0:8000
     ports:
@@ -49,7 +51,7 @@ services:
     depends_on:
       - elasticsearch
   crawler:
-    image: amirsorouri26/dsse_crawler_django:V2.01
+    image: amirsorouri26/dsse_crawler_django:V2.05
     container_name: dsse_crawler_django
     command: python manage.py runserver 0.0.0.0:8000 --nothreading --noreload
     ports:

@@ -12,7 +12,7 @@ WORKDIR /dstea
 
 COPY requirements.txt /dstea/
 
-RUN python -m venv dstea_env
+# RUN python -m venv dstea_env
 
 # RUN source ./dstea_env/bin/activate
 

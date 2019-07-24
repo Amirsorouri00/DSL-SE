@@ -6,7 +6,7 @@ __version__ = "2.0"
 
 import datetime
 import requests
-from .elastic_index_class import Web, WebPage
+from .elastic_index_class import Web, WebPage, InvertedIndex
 import os
 from . import url
 import scrapy
@@ -81,15 +81,20 @@ def pipeline(response, spider):
     title = response.css('title::text').extract_first()
     title = title.strip() if title else ""
 
-    # extract description
-    description = response.css("meta[name=description]::attr(content)").extract_first()
-    description = description.strip() if description else ""
-
     # get main language of page, and main content of page
     lang = url.detect_language(response.body)
     if lang not in languages :
         raise InvalidUsage('Language not supported')
     body, boilerplate = url.extract_content(response.body, languages.get(lang))
+
+        # extract description
+    description = response.css("meta[name=description]::attr(content)").extract_first()
+    if description:
+        description = description.strip() if description else ""
+    else:
+        description = url.create_description(body)
+        description = description.strip() if description else ""
+    
 
     # weight of page
     weight = 3
@@ -108,6 +113,11 @@ def pipeline(response, spider):
                     , description=description, body=body, web=spider.web, weight=weight)
     first.save()
 
+
+    # invin = url.create_inverted_index("%s.%s"%(body,description))
+    # for word in sorted(invin.keys()):
+    #     invIndex = InvertedIndex(word = word, url = response.url, weight = invin[word])
+    #     invIndex.save()
 
     # try to create thumbnail from page
     img_link = response.css("meta[property='og:image']::attr(content)").extract_first()

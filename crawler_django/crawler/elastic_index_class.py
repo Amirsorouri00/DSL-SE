@@ -68,5 +68,19 @@ class WebPage(Document):
 
     def save(self, **kwargs):
         # self.set_name()
-        lang = url.detect_language(self.body)
-        return super(WebPage, self).save('default', 'page-%s'%lang, True, **kwargs)
+        try :
+            lang = url.detect_language(self.body)
+            return super(WebPage, self).save('default', 'page-%s'%lang, True, **kwargs)
+        except Exception as e:
+            return super(WebPage, self).save('default', 'page-en', True, **kwargs)
+    
+    
+class InvertedIndex(Document):
+    word = Text(analyzer=text_analyzer)
+    url = Keyword()
+    weight = Keyword()
+    
+    def save(self, **kwargs):
+        # lang = url.detect_language(self.word)
+        # lang = url.detect_language(self.word)
+        return super(InvertedIndex, self).save('default', '%s'%self.word, True, **kwargs)

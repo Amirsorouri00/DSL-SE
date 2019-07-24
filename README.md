@@ -64,3 +64,10 @@ curl -d "url=http://www.laravel.com" -X POST http://localhost:8080/crawler/crawl
 
 
 
+## Usefull Links
+* https://www.elastic.co/guide/en/elasticsearch/guide/master/dynamic-indices.html
+* https://www.elastic.co/guide/en/elasticsearch/reference/current/analysis-analyzers.html
+* http://www.devinline.com/2018/09/elasticsearch-inverted-index-and-its-storage.html
+* https://gist.github.com/HonzaKral/d90d344bca18ffa71139ac11b9f83124
+* https://faculty.math.illinois.edu/~riveraq2/teaching/simcamp16/PageRankwithPython.html
+* https://github.com/mtusman/stock-eagle/blob/master/stockeagle/eagle.py
