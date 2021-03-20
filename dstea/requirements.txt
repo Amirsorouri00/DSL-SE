@@ -8,7 +8,7 @@ get==2019.4.13
 html2text==2018.1.9
 idna==2.8
 itsdangerous==1.1.0
-Jinja2==2.10.1
+Jinja2==2.11.3
 jusText==2.2.0
 langdetect==1.0.7
 language==0.6
