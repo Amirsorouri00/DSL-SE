@@ -12,7 +12,7 @@ Jinja2==2.10.1
 jusText==2.2.0
 langdetect==1.0.7
 language==0.6
-lxml==4.3.4
+lxml==4.6.3
 MarkupSafe==1.1.1
 post==2019.4.13
 public==2019.4.13
